@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hangi Kart?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1f6feb">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Hangi Kart?">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <h1>Hangi Kart?</h1>
+    <p class="sub">Ne alacağını yaz, Akbank, QNB ve DenizBank kampanyalarından en kârlısını bulalım.</p>
+  </header>
+
+  <form id="search" autocomplete="off">
+    <input id="q" type="search" placeholder="örn. Migros'ta 1500 TL market alışverişi" autofocus>
+    <button type="submit">Bul</button>
+  </form>
+
+  <div class="chips" id="chips"></div>
+
+  <div class="filters">
+    <label><input type="checkbox" data-prog="Axess" checked> Akbank Axess</label>
+    <label><input type="checkbox" data-prog="Akbank" checked> Akbank Mobil</label>
+    <label><input type="checkbox" data-prog="Wings" checked> Wings</label>
+    <label><input type="checkbox" data-prog="QNB" checked> QNB</label>
+    <label><input type="checkbox" data-prog="DenizBank" checked> DenizBank</label>
+    <label title="DenizBank kartları 6 Aralık 2026'da Maximum altyapısına geçiyor"><input type="checkbox" data-prog="Maximum" checked> Maximum <span class="muted">(DenizBank'ın yeni altyapısı)</span></label>
+    <label><input type="checkbox" id="hideTaksit"> Taksit kampanyalarını gizle</label>
+  </div>
+
+  <div id="summary" class="summary"></div>
+  <div id="results"></div>
+
+  <footer>
+    <span id="updated"></span>
+    <button id="refresh" class="link" hidden>Kampanyaları güncelle</button>
+    <p class="muted">Değerler kampanya metninden otomatik çıkarılan tahminlerdir. Harcamadan önce kampanya detayını ve katılım şartını mutlaka kontrol et.</p>
+  </footer>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

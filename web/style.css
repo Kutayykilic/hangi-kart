@@ -1,0 +1,68 @@
+:root {
+  --bg: #f6f7f9; --card: #ffffff; --text: #15181d; --muted: #6b7280; --line: #e5e7eb;
+  --accent: #1f6feb; --good: #0f8a4a; --good-bg: #e7f6ee; --warn: #9a6700; --warn-bg: #fff6dd;
+  --axess: #c8102e; --deniz: #0a4ea2; --maximum: #6b2fa0;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1115; --card: #171a21; --text: #e8eaed; --muted: #9aa0a6; --line: #2a2f38;
+    --accent: #4c8dff; --good: #3ccf7f; --good-bg: #12301f; --warn: #e3b341; --warn-bg: #2e2610;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 Inter, system-ui, sans-serif; }
+.wrap { max-width: 860px; margin: 0 auto; padding: 32px 16px 64px; }
+h1 { margin: 0; font-size: 30px; letter-spacing: -0.02em; }
+.sub { margin: 4px 0 20px; color: var(--muted); }
+.muted { color: var(--muted); font-size: 13px; }
+
+form { display: flex; gap: 8px; }
+#q { flex: 1; min-width: 0; padding: 14px 16px; font: inherit; font-size: 17px; border: 1px solid var(--line);
+     border-radius: 12px; background: var(--card); color: var(--text); }
+#q:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+form button { padding: 0 22px; border: 0; border-radius: 12px; background: var(--accent); color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
+.chip { border: 1px solid var(--line); background: var(--card); color: var(--text); border-radius: 999px; padding: 5px 12px; font: inherit; font-size: 13px; cursor: pointer; }
+.chip:hover { border-color: var(--accent); }
+.filters { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; margin-bottom: 18px; }
+.filters label { cursor: pointer; }
+.summary { color: var(--muted); font-size: 14px; margin-bottom: 10px; }
+
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; margin-bottom: 10px;
+        display: grid; grid-template-columns: 120px 1fr; gap: 16px; }
+.card.best { border-color: var(--good); box-shadow: 0 0 0 1px var(--good); }
+.value { text-align: center; align-self: start; padding: 10px 6px; border-radius: 10px; background: var(--good-bg); color: var(--good); }
+.value b { display: block; font-size: 22px; line-height: 1.15; }
+.value small { font-size: 12px; }
+.value.neutral { background: var(--bg); color: var(--muted); }
+.value.neutral b { color: var(--text); font-size: 18px; }
+.title { font-weight: 600; font-size: 16px; margin: 0 0 6px; }
+.title a { color: inherit; text-decoration: none; }
+.title a:hover { text-decoration: underline; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.badge { font-size: 12px; padding: 2px 8px; border-radius: 6px; background: var(--bg); color: var(--muted); border: 1px solid var(--line); }
+.badge.Axess { color: #fff; background: var(--axess); border-color: var(--axess); }
+.badge.Akbank { color: #fff; background: #e3001b; border-color: #e3001b; }
+.badge.Wings { color: #fff; background: #222; border-color: #222; }
+.badge.QNB { color: #fff; background: #7b1fa2; border-color: #7b1fa2; }
+.badge.DenizBank { color: #fff; background: var(--deniz); border-color: var(--deniz); }
+.badge.Maximum { color: #fff; background: var(--maximum); border-color: var(--maximum); }
+.badge.soon { color: var(--warn); background: var(--warn-bg); border-color: transparent; }
+.row { font-size: 14px; margin: 3px 0; }
+.row span.k { color: var(--muted); }
+.warn { font-size: 13px; color: var(--warn); background: var(--warn-bg); border-radius: 8px; padding: 6px 10px; margin-top: 8px; }
+code.copy { cursor: pointer; background: var(--bg); border: 1px dashed var(--muted); border-radius: 6px; padding: 1px 8px; font-weight: 600; }
+details { margin-top: 8px; font-size: 13px; color: var(--muted); }
+details pre { white-space: pre-wrap; font: inherit; max-height: 320px; overflow: auto; margin: 6px 0 0; }
+summary { cursor: pointer; }
+.empty { text-align: center; color: var(--muted); padding: 40px 0; }
+footer { margin-top: 32px; font-size: 13px; color: var(--muted); }
+.link { background: none; border: 0; color: var(--accent); cursor: pointer; font: inherit; padding: 0 0 0 10px; }
+.toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--text); color: var(--bg); padding: 8px 14px; border-radius: 8px; font-size: 14px; }
+
+@media (max-width: 560px) {
+  .card { grid-template-columns: 1fr; gap: 10px; }
+  .value { display: flex; align-items: baseline; gap: 8px; justify-content: flex-start; padding: 8px 12px; text-align: left; }
+  form button { padding: 0 16px; }
+}

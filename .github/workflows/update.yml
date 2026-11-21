@@ -1,0 +1,63 @@
+name: Kampanyaları güncelle ve yayınla
+
+on:
+  schedule:
+    - cron: "0 4 * * *"   # her gün 07:00 (TR)
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["web/**"]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Bağımlılıklar
+        run: pip install requests beautifulsoup4
+
+      - name: Kampanyaları çek
+        if: github.event_name != 'push'
+        id: scrape
+        continue-on-error: true
+        run: python scraper/scrape.py
+
+      - name: Veriyi repoya kaydet
+        if: steps.scrape.outcome == 'success'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/campaigns.json
+          git diff --cached --quiet || git commit -m "Kampanya verisi güncellendi"
+          git push
+
+      - name: Siteyi hazırla
+        run: |
+          mkdir -p _site/data
+          cp -r web/* _site/
+          cp data/campaigns.json _site/data/
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Çekme başarısızsa işi kırmızı göster
+        if: steps.scrape.outcome == 'failure'
+        run: exit 1
