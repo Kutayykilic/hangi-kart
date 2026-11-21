@@ -296,14 +296,28 @@ def scrape_maximum():
 
 def main():
     all_c = []
-    sources = [("Axess", scrape_axess), ("Akbank.com", scrape_akbank), ("Wings", scrape_wings),
-               ("QNB", scrape_qnb), ("DenizBank", scrape_denizbank), ("Maximum", scrape_maximum)]
-    for name, fn in sources:
+    # (isim, fonksiyon, ürettiği program)
+    sources = [("Axess", scrape_axess, "Axess"), ("Akbank.com", scrape_akbank, "Akbank"),
+               ("Wings", scrape_wings, "Wings"), ("QNB", scrape_qnb, "QNB"),
+               ("DenizBank", scrape_denizbank, "DenizBank"), ("Maximum", scrape_maximum, "Maximum")]
+    previous = []
+    if OUT.exists():
+        try:
+            previous = json.loads(OUT.read_text(encoding="utf-8")).get("campaigns", [])
+        except json.JSONDecodeError:
+            pass
+    for name, fn, program in sources:
         print(f"{name} çekiliyor...", file=sys.stderr)
         try:
-            all_c += fn()
+            got = fn()
+            if not got:
+                raise RuntimeError("hiç kampanya gelmedi")
+            all_c += got
         except Exception as e:  # noqa: BLE001
-            print(f"  {name} başarısız: {e}", file=sys.stderr)
+            # Kaynak erişilemezse (ör. yurt dışı IP engeli) önceki verisini koru
+            old = [c for c in previous if c.get("program") == program]
+            print(f"  {name} başarısız: {e} -> önceki {len(old)} kampanya korunuyor", file=sys.stderr)
+            all_c += old
     today = date.today().isoformat()
     result = []
     for c in all_c:
